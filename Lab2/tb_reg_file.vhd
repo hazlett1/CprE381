@@ -1,0 +1,165 @@
+-------------------------------------------------------------------------
+-- Colton Hazlett
+-- Department of Electrical and Computer Engineering
+-- Iowa State University
+-------------------------------------------------------------------------
+-- tb_reg_file.vhd
+-------------------------------------------------------------------------
+-- DESCRIPTION: This file contains a testbench for the register N-Bits wide
+--              
+-- 01/03/2020 by H3::Design created.
+-------------------------------------------------------------------------
+
+library IEEE;
+use IEEE.std_logic_1164.all;
+use IEEE.std_logic_textio.all;  -- For logic types I/O
+library std;
+use std.env.all;                -- For hierarchical/external signals
+use std.textio.all;             -- For basic I/O
+use work.mypack.all;            -- For input array [32,32];
+
+-- Usually name your testbench similar to below for clarity tb_<name>
+-- TODO: change all instances of tb_TPU_MV_Element to reflect the new testbench.
+entity tb_reg_file is
+  generic(gCLK_HPER   : time := 10 ns);   -- Generic for half of the clock cycle period
+end tb_reg_file;
+
+architecture mixed of tb_reg_file is
+
+-- Define the total clock period time
+constant cCLK_PER  : time := gCLK_HPER * 2;
+
+-- We will be instantiating our design under test (DUT), so we need to specify its
+-- component interface.
+-- TODO: change component declaration as needed.
+component reg_file is
+   port(i_CLK        : in  std_logic;                        -- Clock input
+        i_RST        : in  std_logic;                        -- Reset input
+        i_WE         : in  std_logic;                        -- Write enabled input
+        i_WS         : in  std_logic_vector(4 downto 0);     -- Write select input
+        i_sRS        : in  std_logic_vector(4 downto 0);     -- Select bits for source register
+        i_sRT        : in  std_logic_vector(4 downto 0);     -- Select bits for target register
+        i_wD         : in  std_logic_vector(31 downto 0);    -- Data value input
+        o_RT         : out std_logic_vector(31 downto 0);    -- Output from target register
+        o_RS         : out std_logic_vector(31 downto 0));   -- Output from source register
+end component;
+
+-- Create signals for all of the inputs and outputs of the file that you are testing
+-- := '0' or := (others => '0') just make all the signals start at an initial value of zero
+signal CLK, reset : std_logic := '0';
+
+-- TODO: change input and output signals as needed.\
+signal s_iRST, s_iWE   : std_logic;
+signal s_iWS    : std_logic_vector(4 downto 0);
+signal s_sRS   : std_logic_vector(4 downto 0);
+signal s_sRT   : std_logic_vector(4 downto 0);
+signal s_iwD    : std_logic_vector(31 downto 0);
+signal s_oRS    : std_logic_vector(31 downto 0);
+signal s_oRT    : std_logic_vector(31 downto 0);
+
+begin
+
+  -- TODO: Actually instantiate the component to test and wire all signals to the corresponding
+  -- input or output. Note that DUT0 is just the name of the instance that can be seen 
+  -- during simulation. What follows DUT0 is the entity name that will be used to find
+  -- the appropriate library component during simulation loading.
+  DUT0: reg_file
+  port map( i_CLK  => CLK,
+            i_RST  => s_iRST,
+            i_WE   => s_iWE,
+            i_WS   => s_iWS,
+            i_sRS  => s_sRS,
+            i_sRT  => s_sRT,
+            i_wD   => s_iwD,
+            o_RS   => s_oRS,
+            o_RT   => s_oRT);
+            
+  --You can also do the above port map in one line using the below format: http://www.ics.uci.edu/~jmoorkan/vhdlref/compinst.html
+
+  
+  --This first process is to setup the clock for the test bench
+  P_CLK: process
+  begin
+    CLK <= '1';         -- clock starts at 1
+    wait for gCLK_HPER; -- after half a cycle
+    CLK <= '0';         -- clock becomes a 0 (negative edge)
+    wait for gCLK_HPER; -- after half a cycle, process begins evaluation again
+  end process;
+
+  -- This process resets the sequential components of the design.
+  -- It is held to be 1 across both the negative and positive edges of the clock
+  -- so it works regardless of whether the design uses synchronous (pos or neg edge)
+  -- or asynchronous resets.
+  P_RST: process
+  begin
+  	reset <= '0';   
+    wait for gCLK_HPER/2;
+	reset <= '1';
+    wait for gCLK_HPER*2;
+	reset <= '0';
+	wait;
+  end process;  
+  
+  -- Assign inputs for each test case.
+  -- TODO: add test cases as needed.
+  P_TEST_CASES: process
+  begin
+    wait for gCLK_HPER*2;
+    s_iRST <= '0';
+    s_iWE  <= '1';
+    wait for gCLK_HPER/2; -- for waveform clarity, I prefer not to change inputs on clk edges
+    
+    -- Test Case 1: 
+    -- Set enable to 1 so it will output a hot coded 1, set select to 1.
+    s_iwD <=  "00000000000000000000000000000110";
+    s_iWS <= "00001";
+    wait for gCLK_HPER*2;
+    s_iwD <=  "00000000000000000000000000001111";
+    s_iWS <= "00011";
+    wait for gCLK_HPER*2;
+    s_sRS <= "00001";
+    s_sRT <= "00011";
+    wait for gCLK_HPER*2;
+    -- Expected output after 3 positive edge clocks should be...
+    --    s_oRS should be 00000000000000000000000000000110 or 0x6
+    --    s_oRT should be 00000000000000000000000000001111 or 0xF
+
+    -- Test case 2:
+    -- Change the inocoming data to 8 and have WE = 0, the output, o_Q should not change after two clock cycles and should
+    -- be 7 instead of 8.
+    s_iwD <=  "00000000000000000000000000000110";
+    s_iWS <= "00001";
+    wait for gCLK_HPER*2;
+    s_iwD <=  "00000000000000000000000000001111";
+    s_iWS <= "00011";
+    wait for gCLK_HPER*2;
+    s_sRS <= "00001";
+    s_sRT <= "00011";
+    s_iRST <= '1';
+    wait for gCLK_HPER*2;
+    -- Expected output after 3 positive edge clocks should be...
+    --    s_oRS should be 00000000000000000000000000000000 or 0x0
+    --    s_oRT should be 00000000000000000000000000000000 or 0x0
+    --    This is because RST is 1 so all registers go to zero
+
+    -- Test Case 3:
+    -- Add a new value of 0xFFFFFFFF into the register with WE set to 1, but reset the value at the same time
+    s_iRST <= '0';
+    wait for gCLK_HPER*2;
+    s_iwD <=  "00000000000000000000000000110001";
+    s_iWS <= "11111";
+    wait for gCLK_HPER*2;
+    s_iwD <=  "00000000000000000000000011111111";
+    s_iWS <= "00000";
+    wait for gCLK_HPER*2;
+    s_sRS <= "00000";
+    s_sRT <= "11111";
+    wait for gCLK_HPER*2;
+    -- Expected output after 3 positive edge clocks should be...
+    --    s_oRS should be 00000000000000000000000000000000 or 0x0
+    --    s_oRT should be 00000000000000000000000000110001 or 0x31
+    
+    -- TODO: add test cases as needed (at least 3 more for this lab)
+  end process;
+
+end mixed;
