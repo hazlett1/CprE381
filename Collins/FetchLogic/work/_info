@@ -1,0 +1,177 @@
+m255
+K4
+z2
+!s11e MIXED_VERSIONS
+13
+!s112 1.1
+!i10d 8192
+!i10e 25
+!i10f 100
+cModel Technology
+Z0 dU:/Spring_2021/381_Lab/Project/CprE381/Collins/FetchLogic
+Efetchlogic
+Z1 w1614886141
+Z2 DPx3 std 6 textio 0 22 zE1`LPoLg^DX3Oz^4Fj1K3
+Z3 DPx4 ieee 14 std_logic_1164 0 22 cVAk:aDinOX8^VGI1ekP<3
+!i122 8
+R0
+Z4 8FetchLogic.vhd
+Z5 FFetchLogic.vhd
+l0
+Z6 L21 1
+VT@QoUN4TXkV@iE6N:>5SH0
+!s100 mV2T:O:YzjYDZjRzzNQB:3
+Z7 OL;C;2020.2;71
+33
+Z8 !s110 1614886207
+!i10b 1
+Z9 !s108 1614886206.000000
+Z10 !s90 -reportprogress|300|-2008|-work|work|FetchLogic.vhd|full_adder_N.vhd|mem.vhd|reg_N.vhd|
+!s107 reg_N.vhd|mem.vhd|full_adder_N.vhd|FetchLogic.vhd|
+!i113 0
+Z11 o-2008 -work work
+Z12 tExplicit 1 CvgOpt 0
+Astructural
+R2
+R3
+DEx4 work 10 fetchlogic 0 22 T@QoUN4TXkV@iE6N:>5SH0
+!i122 8
+l88
+L33 105
+VKV@g]N0Oa;JnL=[>HC6UU3
+!s100 ]ETMlMRI;QR;V=IdlhUk92
+R7
+33
+R8
+!i10b 1
+R9
+R10
+Z13 !s107 reg_N.vhd|mem.vhd|full_adder_N.vhd|FetchLogic.vhd|
+!i113 0
+R11
+R12
+Efull_adder_n
+Z14 w1614624064
+R2
+R3
+!i122 8
+R0
+Z15 8full_adder_N.vhd
+Z16 Ffull_adder_N.vhd
+l0
+R6
+VRg7ZY^<Fg]eY?K4K6FLl32
+!s100 86lB<LWfRld^CMP`0a;f52
+R7
+33
+R8
+!i10b 1
+R9
+R10
+R13
+!i113 0
+R11
+R12
+Astructural
+R2
+R3
+DEx4 work 12 full_adder_n 0 22 Rg7ZY^<Fg]eY?K4K6FLl32
+!i122 8
+l43
+L31 29
+Vdf>0BFEY;k;ZL:AGd[:3A3
+!s100 cbS2oZ7QCYS43aT79D:ke0
+R7
+33
+R8
+!i10b 1
+R9
+R10
+R13
+!i113 0
+R11
+R12
+Emem
+Z17 w1585160666
+Z18 DPx4 ieee 11 numeric_std 0 22 aU^R8eGcicLcUFIaBQSL>3
+R2
+R3
+!i122 8
+R0
+Z19 8mem.vhd
+Z20 Fmem.vhd
+l0
+L8 1
+VBSiW;n7WFnI_8U6nH>OE[3
+!s100 fRlcaiTJZJ1H;nZh;8=LI3
+R7
+33
+R8
+!i10b 1
+R9
+R10
+R13
+!i113 0
+R11
+R12
+Artl
+R18
+R2
+R3
+DEx4 work 3 mem 0 22 BSiW;n7WFnI_8U6nH>OE[3
+!i122 8
+l37
+L27 24
+V2OV<fokhe<Og`16n4[bZI2
+!s100 OI8_3><BhDkT3l3n8`OXd3
+R7
+33
+R8
+!i10b 1
+R9
+R10
+R13
+!i113 0
+R11
+R12
+Ereg_n
+Z21 w1614624065
+R2
+R3
+!i122 8
+R0
+Z22 8reg_N.vhd
+Z23 Freg_N.vhd
+l0
+L23 1
+V3nk88G8ITiDTQ6bG:8C0T1
+!s100 4lljEbRiIQBOPDAnAc5lI2
+R7
+33
+R8
+!i10b 1
+R9
+R10
+R13
+!i113 0
+R11
+R12
+Amixed
+R2
+R3
+DEx4 work 5 reg_n 0 22 3nk88G8ITiDTQ6bG:8C0T1
+!i122 8
+l45
+L33 52
+VN3TjM9J:AY0iSmZV2@IPe1
+!s100 G[d=]U26B>82U;>cMhc^B0
+R7
+33
+R8
+!i10b 1
+R9
+R10
+R13
+!i113 0
+R11
+R12
