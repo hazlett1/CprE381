@@ -36,10 +36,12 @@ begin
 		--unsigdned (logical) always add 0
 		with i_shift select
 			s_oData <= i_Data(31 downto 0) when "00000",
-			s_oData <= i_Data(31 downto 0) & "0" when "00001",
-			s_oData <= i_Data(31 downto 0) & "00" when "00010",
-			s_oData <= i_Data(31 downto 0) & "000" when "00011",
-			s_oData <= i_Data(31 downto 0) & "0000" when "00100",
+				i_Data(31 downto 0) & "0" when "00001",
+				i_Data(31 downto 0) & "00" when "00010",
+				i_Data(31 downto 0) & "000" when "00011",
+				i_Data(31 downto 0) & "0000" when "00100",
+			i_Data 
+			
 			
 			o_Data <= s_oData(31 downto 0);
 		else
