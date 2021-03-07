@@ -20,17 +20,28 @@ use IEEE.std_logic_1164.all;
 
   entity FetchLogic is
     generic(N : integer := 32); -- Generic of type integer for input/output data width. Default value is 32.
-    port(	i_PC : in std_logic_vector(N-1 downto 0);
+    port(	i_PC  : in std_logic_vector(N-1 downto 0);  -- Normal shifted by 4 or standard value
+		i_BEQ: in std_logic_vector(N-1 downto 0); -- BEQ value
+		i_Jump: in std_logic_vector(N-1 downto 0); -- JUMP VALUE
 
 			i_CLK : in std_logic;
 			i_RST : in std_logic;
 
 		o_PCPlus   : out std_logic_vector(N-1 downto 0);
-		o_Address  : out std_logic_vector(N-1 downto 0));
+		o_Address  : out std_logic_vector(N-1 downto 0)); -- Ouyput from memory
   end FetchLogic;
 
 
 architecture structural of FetchLogic is
+
+--Mux
+component mux2t1_N is
+  generic(N : integer := 32); -- Generic of type integer for input/output data width. Default value is 32.
+  port(i_S          : in std_logic;
+       i_D0         : in std_logic_vector(N-1 downto 0);
+       i_D1         : in std_logic_vector(N-1 downto 0);
+       o_OA         : out std_logic_vector(N-1 downto 0));
+end component;
 
 
 --reg
@@ -72,6 +83,15 @@ component full_adder is
         o_vC         : out std_logic);
 end component;
 
+--And
+component andg2 is
+
+  port(i_A          : in std_logic;
+       i_B          : in std_logic;
+       o_F          : out std_logic);
+
+end component
+
 
 --Reg_N signal
 signal s_o_reg_N : std_logic_vector(N-1 downto 0);
@@ -82,15 +102,55 @@ signal s_neverUse : std_logic_vector(N-1 downto 0);
 --Temporarily Never Use signal
 signal s_neverUseCarry : std_logic;
 
+-- Signal for Branch Eq out of the AND GATE
+signal s_BranchEq : std_logic;
+
+signal s_mux1 : std_logic_vector(N-1 downto 0);
+
+signal s_mux2 : std_logic_vector(N-1 downto 0);
 
 
 --Port Mapping:
 begin
 
 
+--LEVEL 0
+ ---------------------------------------------------------------------------
+-- AND -- Equal && Branch
+ ---------------------------------------------------------------------------
+andd: andg2
+  port(i_A     =>     ,   -- Equal (Control bit) 									TO DO
+       i_B     =>     ,	-- Branch (control bit) 									TO DO
+       o_F     =>  s_BranchEq  );  -- Signal bit for Mux 1
+
 
 
 --LEVEL 1
+ ---------------------------------------------------------------------------
+-- MUX 1 -- BRANCH (NOT) EQUALS
+ ---------------------------------------------------------------------------
+MUX1: mux2t1_N
+  port(i_S          => s_BranchEq , -- Equal and Branch
+       i_D0         =>  i_BEQ, -- Branch Value (branch input value)
+       i_D1         =>  i_PC, -- Non- Branch Value (the PC+ 4 value or 0 if just starting??) NOT SURE 
+       o_OA         =>  s_mux1); -- Output Value from mux 1
+
+
+
+
+--LEVEL 2
+ ---------------------------------------------------------------------------
+-- MUX 2
+ ---------------------------------------------------------------------------
+MUX2: mux2t1_N
+  port(i_S          =>  , -- Jump or No Jump (Control Bit)  								TO DO
+       i_D0         =>  s_mux1, -- Output from mux 1
+       i_D1         =>  i_Jump, -- Jump Value
+       o_OA         =>  s_mux2); -- Output Value from Mux 2
+
+
+
+--LEVEL 3
  ---------------------------------------------------------------------------
 --PC Register
  ---------------------------------------------------------------------------
@@ -98,14 +158,14 @@ begin
     port MAP(i_CLK		  => i_CLK,
 	     i_RST                => i_RST,
              i_WE                 => '1',
-	     i_D                  => i_PC,
+	     i_D                  => s_mux2,
              o_Q                  => s_o_reg_N );
 
    -- NOTE: NOT SURE ABOUT DATA OR I_WE
 
 
 
---LEVEL 2
+--LEVEL 4
  ---------------------------------------------------------------------------
 -- PC + 4 && PC -> Memory
  ---------------------------------------------------------------------------
