@@ -41,6 +41,7 @@ component control is
        ALUSrc       : out std_logic;
        RegWE        : out std_logic;
        immSigned    : out std_logic;
+       equals       : out std_logic;
        ALUop        : out std_logic_vector(3 downto 0));
 end component;
 
@@ -51,7 +52,7 @@ signal CLK, reset : std_logic := '0';
 -- TODO: change input and output signals as needed.
 signal s_ins      : std_logic_vector(5 downto 0);
 signal s_ALUop    : std_logic_vector(3 downto 0);
-signal s_regDst, s_jump, s_branch, s_memWR, s_MemtoReg, s_ALUSrc, s_RegWE, s_immSigned : std_logic;
+signal s_regDst, s_jump, s_branch, s_memWR, s_MemtoReg, s_ALUSrc, s_RegWE, s_immSigned, s_equals : std_logic;
 
 begin
 
@@ -69,6 +70,7 @@ begin
             ALUSrc      => s_ALUSrc,
             RegWE       => s_RegWE,
             immSigned   => s_immSigned,
+            equals      => s_equals,
             ALUop       => s_ALUop);
   --You can also do the above port map in one line using the below format: http://www.ics.uci.edu/~jmoorkan/vhdlref/compinst.html
 
