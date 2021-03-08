@@ -26,6 +26,11 @@ use IEEE.std_logic_1164.all;
 
 			i_CLK : in std_logic;
 			i_RST : in std_logic;
+ 			
+			equals : in std_logic;
+			branch : in std_logic;
+			jump   : in std_logic;
+			pcWE   : in std_logic;
 
 		o_PCPlus   : out std_logic_vector(N-1 downto 0);
 		o_Address  : out std_logic_vector(N-1 downto 0)); -- Ouyput from memory
@@ -119,8 +124,8 @@ begin
 -- AND -- Equal && Branch
  ---------------------------------------------------------------------------
 andd: andg2
-  port(i_A     =>     ,   -- Equal (Control bit) 									TO DO
-       i_B     =>     ,	-- Branch (control bit) 									TO DO
+  port(i_A     =>     equals,   -- Equal (Control bit) 									
+       i_B     =>     branch,	-- Branch (control bit) 									
        o_F     =>  s_BranchEq  );  -- Signal bit for Mux 1
 
 
@@ -143,10 +148,11 @@ MUX1: mux2t1_N
 -- MUX 2
  ---------------------------------------------------------------------------
 MUX2: mux2t1_N
-  port(i_S          =>  , -- Jump or No Jump (Control Bit)  								TO DO
+  port(i_S          =>  jump, -- Jump or No Jump (Control Bit)  					
        i_D0         =>  s_mux1, -- Output from mux 1
        i_D1         =>  i_Jump, -- Jump Value
        o_OA         =>  s_mux2); -- Output Value from Mux 2
+
 
 
 
@@ -157,7 +163,7 @@ MUX2: mux2t1_N
   PC: reg_N
     port MAP(i_CLK		  => i_CLK,
 	     i_RST                => i_RST,
-             i_WE                 => '1',
+             i_WE                 => pcWE, 
 	     i_D                  => s_mux2,
              o_Q                  => s_o_reg_N );
 
