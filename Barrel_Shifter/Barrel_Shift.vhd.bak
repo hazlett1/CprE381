@@ -40,7 +40,7 @@ signal shiftLorR : std_logic_vector(31 downto 0);
 
 signal o_firstshift : std_logic;
 
-signal output : std_logic_vector(31 downto 0); -- Potential new signal for the generates?
+signal output : std_logic_vector(31 downto 0); -- Potential new?
 
 component mux2t1_N is
   port(i_S          : in std_logic;
