@@ -1,0 +1,203 @@
+-------------------------------------------------------------------------
+-- Henry Duwe
+-- Department of Electrical and Computer Engineering
+-- Iowa State University
+-------------------------------------------------------------------------
+
+
+-- AddSub.vhd
+-------------------------------------------------------------------------
+-- DESCRIPTION: This file contains an implementation of an N-bit wide 2:1
+-- mux using structural VHDL, generics, and generate statements.
+--
+--
+-- NOTES:
+-- 1/6/20 by H3::Created.
+-------------------------------------------------------------------------
+
+library IEEE;
+use IEEE.std_logic_1164.all;
+
+  entity FetchLogic is
+    generic(N : integer := 32); -- Generic of type integer for input/output data width. Default value is 32.
+    port(	i_PC  : in std_logic_vector(N-1 downto 0);  -- Normal shifted by 4 or standard value
+		i_BEQ: in std_logic_vector(N-1 downto 0); -- BEQ value
+		i_Jump: in std_logic_vector(N-1 downto 0); -- JUMP VALUE
+
+			i_CLK : in std_logic;
+			i_RST : in std_logic;
+ 			
+			equals : in std_logic;
+			branch : in std_logic;
+			jump   : in std_logic;
+			pcWE   : in std_logic;
+
+		o_PCPlus   : out std_logic_vector(N-1 downto 0);
+		o_Address  : out std_logic_vector(N-1 downto 0)); -- Ouyput from memory
+  end FetchLogic;
+
+
+architecture structural of FetchLogic is
+
+--Mux
+component mux2t1_N is
+  generic(N : integer := 32); -- Generic of type integer for input/output data width. Default value is 32.
+  port(i_S          : in std_logic;
+       i_D0         : in std_logic_vector(N-1 downto 0);
+       i_D1         : in std_logic_vector(N-1 downto 0);
+       o_OA         : out std_logic_vector(N-1 downto 0));
+end component;
+
+
+--reg
+component reg_N is
+  generic(N : integer := 32); -- Generic of type integer for input/output data width. Default value is 32.
+
+  port(i_CLK        : in  std_logic;                        -- Clock input
+       i_RST        : in  std_logic;                        -- Reset input
+       i_WE         : in  std_logic;                        -- Write enable input
+       i_D          : in  std_logic_vector(N-1 downto 0);   -- Data value input
+       o_Q          : out std_logic_vector(N-1 downto 0));
+end component;
+
+
+--mem
+component mem is
+	generic 
+	(
+		DATA_WIDTH : natural := 32;
+		ADDR_WIDTH : natural := 10
+	);
+	port 
+	(
+		clk		: in std_logic;
+		addr	        : in std_logic_vector((ADDR_WIDTH-1) downto 0);
+		data	        : in std_logic_vector((DATA_WIDTH-1) downto 0);
+		we		: in std_logic := '1';
+		q		: out std_logic_vector((DATA_WIDTH -1) downto 0)
+	);
+  end component;
+
+--adder
+component full_adder is
+  generic(N : integer := 32); -- Generic of type integer for input/output data width. Default value is 32.
+  port(	i_vC         :  in std_logic;
+        i_vA         :  in std_logic_vector(N-1 downto 0);
+        i_vB         :  in std_logic_vector(N-1 downto 0);
+        o_vS         : out std_logic_vector(N-1 downto 0);
+        o_vC         : out std_logic);
+end component;
+
+--And
+component andg2 is
+
+  port(i_A          : in std_logic;
+       i_B          : in std_logic;
+       o_F          : out std_logic);
+
+end component
+
+
+--Reg_N signal
+signal s_o_reg_N : std_logic_vector(N-1 downto 0);
+
+--Temporarily Never Use signal
+signal s_neverUse : std_logic_vector(N-1 downto 0);
+
+--Temporarily Never Use signal
+signal s_neverUseCarry : std_logic;
+
+-- Signal for Branch Eq out of the AND GATE
+signal s_BranchEq : std_logic;
+
+signal s_mux1 : std_logic_vector(N-1 downto 0);
+
+signal s_mux2 : std_logic_vector(N-1 downto 0);
+
+
+--Port Mapping:
+begin
+
+
+--LEVEL 0
+ ---------------------------------------------------------------------------
+-- AND -- Equal && Branch
+ ---------------------------------------------------------------------------
+andd: andg2
+  port(i_A     =>     equals,   -- Equal (Control bit) 									
+       i_B     =>     branch,	-- Branch (control bit) 									
+       o_F     =>  s_BranchEq  );  -- Signal bit for Mux 1
+
+
+
+--LEVEL 1
+ ---------------------------------------------------------------------------
+-- MUX 1 -- BRANCH (NOT) EQUALS
+ ---------------------------------------------------------------------------
+MUX1: mux2t1_N
+  port(i_S          => s_BranchEq , -- Equal and Branch
+       i_D0         =>  i_BEQ, -- Branch Value (branch input value)
+       i_D1         =>  i_PC, -- Non- Branch Value (the PC+ 4 value or 0 if just starting??) NOT SURE 
+       o_OA         =>  s_mux1); -- Output Value from mux 1
+
+
+
+
+--LEVEL 2
+ ---------------------------------------------------------------------------
+-- MUX 2
+ ---------------------------------------------------------------------------
+MUX2: mux2t1_N
+  port(i_S          =>  jump, -- Jump or No Jump (Control Bit)  					
+       i_D0         =>  s_mux1, -- Output from mux 1
+       i_D1         =>  i_Jump, -- Jump Value
+       o_OA         =>  s_mux2); -- Output Value from Mux 2
+
+
+
+
+--LEVEL 3
+ ---------------------------------------------------------------------------
+--PC Register
+ ---------------------------------------------------------------------------
+  PC: reg_N
+    port MAP(i_CLK		  => i_CLK,
+	     i_RST                => i_RST,
+             i_WE                 => pcWE, 
+	     i_D                  => s_mux2,
+             o_Q                  => s_o_reg_N );
+
+   -- NOTE: NOT SURE ABOUT DATA OR I_WE
+
+
+
+--LEVEL 4
+ ---------------------------------------------------------------------------
+-- PC + 4 && PC -> Memory
+ ---------------------------------------------------------------------------
+
+ meme: mem
+    port MAP(clk		=> i_CLK,
+	     addr               => s_o_reg_N,
+             data               => s_neverUse,
+             we                 => '0',
+             q                  => o_Address);
+
+
+
+
+
+  Adder1: full_adder
+    port MAP(i_vC               => '0',
+             i_vA               => "00000000000000000000000000000100" ,
+             i_vB               => s_o_reg_N,   
+	     o_vS      		=> o_PCPlus,
+	     o_vC		=> s_neverUseCarry);
+
+
+	-- 32 bit - '4' hardcoded in binary
+
+
+
+
+end structural;

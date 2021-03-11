@@ -27,6 +27,7 @@ entity control is
        MemtoReg     : out std_logic;
        ALUSrc       : out std_logic;
        RegWE        : out std_logic;
+       equals       : out std_logic;
        immSigned    : out std_logic;
        ALUop        : out std_logic_vector(3 downto 0));
 
@@ -44,28 +45,31 @@ architecture structural of control is
    --   5    - i_Signed
    --   6    - jump
    --   7    - branch
-   --   8-11 - ALU control
-   signal output : std_logic_vector(11 downto 0); --Temp placeholder for control outputs for with select statement
+   --   8    - equals
+   --   9-12 - ALU control
+   signal output : std_logic_vector(12 downto 0); --Temp placeholder for control outputs for with select statement
 
 begin
 
+    -- Merge together all the output bits
     with instruction select 
-       output <= "000000011000" when "000000", --R-type instruction
-                 "000100101001" when "001000", --Addi
-                 "001000001001" when "001001", --Addiu
-                 "011000101001" when "001100", --Andi
-                 "010100001001" when "001111", --lui
-                 "101000101111" when "100011", --lw
-                 "100000001001" when "001110", --xori
-                 "011100001001" when "001101", --ori
-                 "100100101001" when "001010", --slti
-                 "101100100111" when "101011", --sw
-                 "110010001001" when "000100", --beq
-                 "110110001001" when "000101", --bne
-                 "000001000000" when "000010", --j
-                 "000001000000" when "000011", --jal
-                 "000000000000" when others;
-
+       output <= "0000000011000" when "000000", --R-type instruction
+                 "0001000101001" when "001000", --Addi
+                 "0010000001001" when "001001", --Addiu
+                 "0110000101001" when "001100", --Andi
+                 "0101000001001" when "001111", --lui
+                 "1010000101111" when "100011", --lw
+                 "1000000001001" when "001110", --xori
+                 "0111000001001" when "001101", --ori
+                 "1001000101001" when "001010", --slti
+                 "1011000100111" when "101011", --sw
+                 "1100110001001" when "000100", --beq
+                 "1101010001001" when "000101", --bne
+                 "0000001000000" when "000010", --j
+                 "0000001000000" when "000011", --jal
+                 "0000000000000" when others;
+   
+   --Seperate the array into all of the outputs
    ALUSrc    <= output(0);
    MemtoReg  <= output(1);
    MemWR     <= output(2);
@@ -74,6 +78,7 @@ begin
    immSigned <= output(5);
    jump      <= output(6);
    branch    <= output(7);
-   ALUop     <= output(11 downto 8);
+   equals    <= output(8);
+   ALUop     <= output(12 downto 9);
 
 end structural;
