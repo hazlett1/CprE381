@@ -38,9 +38,7 @@ signal unsignedval : std_logic := '0'; --hard coded for sign or unsigned to add 
 
 signal shiftLorR : std_logic_vector(31 downto 0);
 
-signal o_firstshift : std_logic;
 
-signal output : std_logic_vector(31 downto 0); -- Potential new signal for the generates?
 
 
 
@@ -91,7 +89,9 @@ shiftleftorRight : mux2t1_N --mux for it it is to be shift left or right
 		i_D0 => switched_bits,
 		o_OA  => shiftLorR);
 
-signedval <= shiftLorR(31);
+
+
+signedval <= i_Data(31);
 
 ---------------------------------------------------------------------------------------------------
 --logic for the 1 bit 2to1 mux for if arithmetic or logic and chooses which to add to shifting bits
@@ -139,7 +139,7 @@ bitmuxshift_2_B : for i in 1 downto 0 generate
 shift_2 : mux2t1 port map( --setting of intial bits
 	i_S => i_Shift(1), --shift amount LSB
 	i_D1 => logicOrArith,
-	i_D0 => shiftLorR(i),
+	i_D0 => s_shift1to2(i),
 	o_O => s_shift2to4(i));
 end generate bitmuxshift_2_B;
 
@@ -159,9 +159,11 @@ bitmuxshift_4_B : for i in 3 downto 0 generate
 shift_4 : mux2t1 port map( --setting of intial bits
 	i_S => i_Shift(2), --shift amount LSB
 	i_D1 => logicOrArith,
-	i_D0 => shiftLorR(i),
+	i_D0 => s_shift2to4(i),
 	o_O => s_shift4to8(i));
 end generate bitmuxshift_4_B;
+
+
 
 
 -----------------
@@ -179,7 +181,7 @@ bitmuxshift_8_B : for i in 7 downto 0 generate
 shift_8 : mux2t1 port map( --setting of intial bits
 	i_S => i_Shift(3), --shift amount LSB
 	i_D1 => logicOrArith,
-	i_D0 => shiftLorR(i),
+	i_D0 => s_shift4to8(i),
 	o_O => s_shift8to16(i));
 end generate bitmuxshift_8_B;
 
@@ -199,7 +201,7 @@ bitmuxshift_16_B : for i in 15 downto 0 generate
 shift_16 : mux2t1 port map( --setting of intial bits
 	i_S => i_Shift(4), --shift amount LSB
 	i_D1 => logicOrArith,
-	i_D0 => shiftLorR(i),
+	i_D0 => s_shift8to16(i),
 	o_O => s_oData(i));
 end generate bitmuxshift_16_B;
 
