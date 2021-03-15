@@ -139,7 +139,7 @@ bitmuxshift_2_B : for i in 1 downto 0 generate
 shift_2 : mux2t1 port map( --setting of intial bits
 	i_S => i_Shift(1), --shift amount LSB
 	i_D1 => logicOrArith,
-	i_D0 => shiftLorR(i),
+	i_D0 => s_shift1to2(i),
 	o_O => s_shift2to4(i));
 end generate bitmuxshift_2_B;
 
@@ -159,7 +159,7 @@ bitmuxshift_4_B : for i in 3 downto 0 generate
 shift_4 : mux2t1 port map( --setting of intial bits
 	i_S => i_Shift(2), --shift amount LSB
 	i_D1 => logicOrArith,
-	i_D0 => shiftLorR(i),
+	i_D0 => s_shift2to4(i),
 	o_O => s_shift4to8(i));
 end generate bitmuxshift_4_B;
 
@@ -178,7 +178,7 @@ bitmuxshift_8_B : for i in 7 downto 0 generate
 shift_8 : mux2t1 port map( --setting of intial bits
 	i_S => i_Shift(3), --shift amount LSB
 	i_D1 => logicOrArith,
-	i_D0 => shiftLorR(i),
+	i_D0 => s_shift4to8(i),
 	o_O => s_shift8to16(i));
 end generate bitmuxshift_8_B;
 
@@ -199,7 +199,7 @@ bitmuxshift_16_B : for i in 15 downto 0 generate
 shift_16 : mux2t1 port map( --setting of intial bits
 	i_S => i_Shift(4), --shift amount LSB
 	i_D1 => logicOrArith,
-	i_D0 => shiftLorR(i),
+	i_D0 => s_shift8to16(i),
 	o_O => s_oData(i));
 end generate bitmuxshift_16_B;
 
