@@ -109,8 +109,8 @@ logicOrArthimetic : mux2t1
 bitmuxshift_1 : for i in 31 downto 1 generate
 shiftlogic_1 : mux2t1 port map(
 	i_S => i_Shift(0), 
-	i_D1 => shiftLorR(i),	-- No shift
-	i_D0 => shiftLorR(i-1), --Yes shift =
+	i_D0 => shiftLorR(i),	-- No shift
+	i_D1 => shiftLorR(i-1), --Yes shift =
 	o_O => s_shift1to2(i));  
 end generate bitmuxshift_1;
 
@@ -130,8 +130,8 @@ shift_1 : mux2t1 port map( --setting of intial bits
 bitmuxshift_2_A : for i in 31 downto 2 generate
 shiftlogic_2 : mux2t1 port map(
 	i_S => i_Shift(1), 
-	i_D1 => s_shift1to2(i),
-	i_D0 => s_shift1to2(i-2),
+	i_D0 => s_shift1to2(i),
+	i_D1 => s_shift1to2(i-2),
 	o_O => s_shift2to4(i));
 end generate bitmuxshift_2_A;
 
@@ -150,8 +150,8 @@ end generate bitmuxshift_2_B;
 bitmuxshift_4_A : for i in 31 downto 4 generate
 shiftlogic_4 : mux2t1 port map(
 	i_S => i_Shift(2), 
-	i_D1 => s_shift2to4(i),
-	i_D0 => s_shift2to4(i-4),
+	i_D0 => s_shift2to4(i),
+	i_D1 => s_shift2to4(i-4),
 	o_O => s_shift4to8(i));
 end generate bitmuxshift_4_A;
 
@@ -163,14 +163,15 @@ shift_4 : mux2t1 port map( --setting of intial bits
 	o_O => s_shift4to8(i));
 end generate bitmuxshift_4_B;
 
+
 -----------------
 --shifting 8 bits
 -----------------
 bitmuxshift_8_A : for i in 31 downto 8 generate
 shiftlogic_8 : mux2t1 port map(
 	i_S => i_Shift(3), 
-	i_D1 => s_shift4to8(i),
-	i_D0 => s_shift4to8(i-8),
+	i_D0 => s_shift4to8(i),
+	i_D1 => s_shift4to8(i-8),
 	o_O => s_shift8to16(i));
 end generate bitmuxshift_8_A;
 
@@ -183,15 +184,14 @@ shift_8 : mux2t1 port map( --setting of intial bits
 end generate bitmuxshift_8_B;
 
 
-
 -----------------
 --shifting 16 bits
 -----------------
 bitmuxshift_16_A : for i in 31 downto 16 generate
 shiftlogic_16 : mux2t1 port map(
 	i_S => i_Shift(4), 
-	i_D1 => s_shift8to16(i),
-	i_D0 => s_shift8to16(i-16),
+	i_D0 => s_shift8to16(i),
+	i_D1 => s_shift8to16(i-16),
 	o_O => s_oData(i));
 end generate bitmuxshift_16_A;
 
