@@ -53,7 +53,7 @@ signal s_i_Data                	:  std_logic_vector(31 downto 0);
 signal s_i_left                	:  std_logic; --1 for left and 0 for right 
 signal s_i_logic                :  std_logic; --1 for logic (unsigned) and 0 for arithmetic (signed)
 signal s_i_shift		:  std_logic_vector(4 downto 0); --shift amount
-signal s_o_Data			:  std_logic_vector(31 downto 0));
+signal s_o_Data			:  std_logic_vector(31 downto 0);
 
 begin
 

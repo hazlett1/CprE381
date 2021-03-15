@@ -32,15 +32,25 @@ signal switched_bits2 : std_logic_vector(31 downto 0); --switch bits so that I c
 
 signal logicOrArith : std_logic; --used for making of if is logic or arithmetic
 
-signal signedval : std_logic := '0';
+signal signedval : std_logic;
 
-signal unsignedval : std_logic := '1'; --hard coded for sign or unsigned to add 1 or 0 for sign or unsigned
+signal unsignedval : std_logic := '0'; --hard coded for sign or unsigned to add 1 or 0 for sign or unsigned
 
 signal shiftLorR : std_logic_vector(31 downto 0);
 
 signal o_firstshift : std_logic;
 
-signal output : std_logic_vector(31 downto 0); -- Potential new?
+signal output : std_logic_vector(31 downto 0); -- Potential new signal for the generates?
+
+
+
+signal s_shift1to2 : std_logic_vector(31 downto 0); -- Shift1to2
+signal s_shift2to4 : std_logic_vector(31 downto 0); -- Shift2to4
+signal s_shift4to8 : std_logic_vector(31 downto 0); -- Shift4to8
+signal s_shift8to16 : std_logic_vector(31 downto 0); -- Shift8to16
+
+
+
 
 component mux2t1_N is
   port(i_S          : in std_logic;
@@ -64,14 +74,7 @@ begin
    
 --o_Data <= s_oData;
 
----------------------------------------------------------------------------------------------------
---logic for the 1 bit 2to1 mux for if arithmetic or logic and chooses which to add to shifting bits
----------------------------------------------------------------------------------------------------
-logicOrArthimetic : mux2t1
-	port map(i_D0 => signedval,
-		i_D1 => unsignedval,
-		o_O => logicOrArith,
-		i_S => i_logic);
+
 
 
 -------------------------------------------------------
@@ -88,6 +91,17 @@ shiftleftorRight : mux2t1_N --mux for it it is to be shift left or right
 		i_D0 => switched_bits,
 		o_OA  => shiftLorR);
 
+signedval <= shiftLorR(31);
+
+---------------------------------------------------------------------------------------------------
+--logic for the 1 bit 2to1 mux for if arithmetic or logic and chooses which to add to shifting bits
+---------------------------------------------------------------------------------------------------
+logicOrArthimetic : mux2t1
+	port map(i_S => i_logic,
+		i_D0 => signedval,
+		i_D1 => unsignedval,
+		o_O => logicOrArith);
+
 
 ------------------------------
 --shifting of the intial 1 bit
@@ -95,16 +109,20 @@ shiftleftorRight : mux2t1_N --mux for it it is to be shift left or right
 bitmuxshift_1 : for i in 31 downto 1 generate
 shiftlogic_1 : mux2t1 port map(
 	i_S => i_Shift(0), 
-	i_D1 => shiftLorR(i),
-	i_D0 => shiftLorR(i-1), 
-	o_O => shiftLorR(i));  
+	i_D1 => shiftLorR(i),	-- No shift
+	i_D0 => shiftLorR(i-1), --Yes shift =
+	o_O => s_shift1to2(i));  
 end generate bitmuxshift_1;
+
 
 shift_1 : mux2t1 port map( --setting of intial bits
 	i_S => i_Shift(0), --shift amount LSB
-	i_D1 => i_logic,
-	i_D0 => shiftLorR(0),
-	o_O => shiftLorR(0));
+	i_D1 => logicOrArith, -- Take MSB (Yes shift)
+	i_D0 => shiftLorR(0), -- Starting Bit (No shift)
+	o_O => s_shift1to2(0));
+
+
+
 
 --------------------
 --shifting of 2 bits
@@ -112,17 +130,17 @@ shift_1 : mux2t1 port map( --setting of intial bits
 bitmuxshift_2_A : for i in 31 downto 2 generate
 shiftlogic_2 : mux2t1 port map(
 	i_S => i_Shift(1), 
-	i_D1 => shiftLorR(i),
-	i_D0 => shiftLorR(i-2),
-	o_O => shiftLorR(i));
+	i_D1 => s_shift1to2(i),
+	i_D0 => s_shift1to2(i-2),
+	o_O => s_shift2to4(i));
 end generate bitmuxshift_2_A;
 
 bitmuxshift_2_B : for i in 1 downto 0 generate
 shift_2 : mux2t1 port map( --setting of intial bits
 	i_S => i_Shift(1), --shift amount LSB
-	i_D1 => i_logic,
-	i_D0 => shiftLorR(i),
-	o_O => shiftLorR(i));
+	i_D1 => logicOrArith,
+	i_D0 => s_shift1to2(i),
+	o_O => s_shift2to4(i));
 end generate bitmuxshift_2_B;
 
 
@@ -132,17 +150,17 @@ end generate bitmuxshift_2_B;
 bitmuxshift_4_A : for i in 31 downto 4 generate
 shiftlogic_4 : mux2t1 port map(
 	i_S => i_Shift(2), 
-	i_D1 => shiftLorR(i),
-	i_D0 => shiftLorR(i-4),
-	o_O => shiftLorR(i));
+	i_D1 => s_shift2to4(i),
+	i_D0 => s_shift2to4(i-4),
+	o_O => s_shift4to8(i));
 end generate bitmuxshift_4_A;
 
 bitmuxshift_4_B : for i in 3 downto 0 generate
 shift_4 : mux2t1 port map( --setting of intial bits
 	i_S => i_Shift(2), --shift amount LSB
-	i_D1 => i_logic,
-	i_D0 => shiftLorR(i),
-	o_O => shiftLorR(i));
+	i_D1 => logicOrArith,
+	i_D0 => s_shift2to4(i),
+	o_O => s_shift4to8(i));
 end generate bitmuxshift_4_B;
 
 -----------------
@@ -151,18 +169,19 @@ end generate bitmuxshift_4_B;
 bitmuxshift_8_A : for i in 31 downto 8 generate
 shiftlogic_8 : mux2t1 port map(
 	i_S => i_Shift(3), 
-	i_D1 => shiftLorR(i),
-	i_D0 => shiftLorR(i-8),
-	o_O => shiftLorR(i));
+	i_D1 => s_shift4to8(i),
+	i_D0 => s_shift4to8(i-8),
+	o_O => s_shift8to16(i));
 end generate bitmuxshift_8_A;
 
 bitmuxshift_8_B : for i in 7 downto 0 generate
 shift_8 : mux2t1 port map( --setting of intial bits
 	i_S => i_Shift(3), --shift amount LSB
-	i_D1 => i_logic,
-	i_D0 => shiftLorR(i),
-	o_O => shiftLorR(i));
+	i_D1 => logicOrArith,
+	i_D0 => s_shift4to8(i),
+	o_O => s_shift8to16(i));
 end generate bitmuxshift_8_B;
+
 
 
 -----------------
@@ -171,17 +190,17 @@ end generate bitmuxshift_8_B;
 bitmuxshift_16_A : for i in 31 downto 16 generate
 shiftlogic_16 : mux2t1 port map(
 	i_S => i_Shift(4), 
-	i_D1 => shiftLorR(i),
-	i_D0 => shiftLorR(i-16),
-	o_O => shiftLorR(i));
+	i_D1 => s_shift8to16(i),
+	i_D0 => s_shift8to16(i-16),
+	o_O => s_oData(i));
 end generate bitmuxshift_16_A;
 
 bitmuxshift_16_B : for i in 15 downto 0 generate
 shift_16 : mux2t1 port map( --setting of intial bits
 	i_S => i_Shift(4), --shift amount LSB
-	i_D1 => i_logic,
-	i_D0 => shiftLorR(i),
-	o_O => shiftLorR(i));
+	i_D1 => logicOrArith,
+	i_D0 => s_shift8to16(i),
+	o_O => s_oData(i));
 end generate bitmuxshift_16_B;
 
 
@@ -189,13 +208,13 @@ end generate bitmuxshift_16_B;
 --switching back to the original bits
 -------------------------------------
 bitswitchback : for i in 0 to 31 generate
-	switched_bits2(i) <= shiftLorR(31 - i); --switch back to normal
+	switched_bits2(i) <= s_oData(31 - i); --switch back to normal
 end generate bitswitchback;
 
 
 shiftleftorRight_2 : mux2t1_N --mux for it it is to be shift left or right
 	port map(i_S => i_Left,
-		i_D1 => shiftLorR,
+		i_D1 => s_oData,
 		i_D0 => switched_bits2,
 		o_OA  => o_Data);
 
