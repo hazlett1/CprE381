@@ -80,8 +80,8 @@ begin
     -- Test case 1:
 
 	s_i_Data	<=  x"0000000F"; -- 32 bits
-	s_i_left	<=  '1'; -- 1 because we want to go left
-	s_i_logic	<=  '1'; -- 1 because we want unsigned
+	s_i_left	<=  '0'; -- 1 because we want to go left
+	s_i_logic	<=  '0'; -- 1 because we want unsigned
 	s_i_shift	<=  "00100"; --5 bits
 
   
@@ -89,30 +89,6 @@ begin
     -- Expect: o_Data = x"000000F0"
 
 
-
-    -- Test case 2:
-
-	s_i_Data	<=  x"0000000F"; -- 32 bits
-	s_i_left	<=  '1'; -- 1 because we want to go left
-	s_i_logic	<=  '1'; -- 1 because we want unsigned
-	s_i_shift	<=  "00100"; --5 bits
-
-  
-    wait for gCLK_HPER*2;
-    -- Expect: o_Data = x"000000F0"
-
-
-
-    -- Test case 3:
-
-	s_i_Data	<=  x"0000000F"; -- 32 bits
-	s_i_left	<=  '1'; -- 1 because we want to go left
-	s_i_logic	<=  '1'; -- 1 because we want unsigned
-	s_i_shift	<=  "00100"; --5 bits
-
-  
-    wait for gCLK_HPER*2;
-    -- Expect: o_Data = x"000000F0"
 
 
 
