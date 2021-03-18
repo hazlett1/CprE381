@@ -1,0 +1,106 @@
+m255
+K4
+z2
+!s11e vcom 2020.2 2020.04, Apr 19 2020
+13
+!s112 1.1
+!i10d 8192
+!i10e 25
+!i10f 100
+cModel Technology
+Z0 dU:/Spring_2021/381_Lab/Project/CprE381
+T_opt
+!s110 1616083204
+VDz^nUPNjDXhKbFZl<Gmj;2
+04 10 5 work tb_control mixed 1
+=1-509a4c4736be-60537903-3b9-2f44
+o-quiet -auto_acc_if_foreign -work work +acc
+tCvgOpt 0
+n@_opt
+OL;O;2020.2;71
+Econtrol
+Z1 w1615478909
+Z2 DPx3 std 6 textio 0 22 zE1`LPoLg^DX3Oz^4Fj1K3
+Z3 DPx4 ieee 14 std_logic_1164 0 22 cVAk:aDinOX8^VGI1ekP<3
+!i122 0
+R0
+Z4 8Control.vhd
+Z5 FControl.vhd
+l0
+L21 1
+VN_bUng6_O=SKDCUOl<^:g2
+!s100 4KT<QHC0zMmzf0c1>eff30
+Z6 OL;C;2020.2;71
+33
+Z7 !s110 1616083199
+!i10b 1
+Z8 !s108 1616083198.000000
+Z9 !s90 -reportprogress|300|-2008|-work|work|Control.vhd|tb_Control.vhd|
+Z10 !s107 tb_Control.vhd|Control.vhd|
+!i113 0
+Z11 o-2008 -work work
+Z12 tExplicit 1 CvgOpt 0
+Astructural
+R2
+R3
+DEx4 work 7 control 0 22 N_bUng6_O=SKDCUOl<^:g2
+!i122 0
+l52
+L37 48
+VzI^=<`R[bCdQCMmF::32=1
+!s100 fWK1m@MI=8PQTmF2K:`eC0
+R6
+33
+R7
+!i10b 1
+R8
+R9
+R10
+!i113 0
+R11
+R12
+Etb_control
+R1
+Z13 DPx3 std 3 env 0 22 d?`1ck@NdeD@H3RZG7FgZ2
+Z14 DPx4 ieee 16 std_logic_textio 0 22 ^l:n6VFdg74Q?CKDhjD]D3
+R2
+R3
+!i122 0
+R0
+Z15 8tb_Control.vhd
+Z16 Ftb_Control.vhd
+l0
+L22 1
+V]^nXhQRomFO7FzjP4BghF0
+!s100 zV:[oLTCj=nGCj@B=1C3@1
+R6
+33
+R7
+!i10b 1
+R8
+R9
+R10
+!i113 0
+R11
+R12
+Amixed
+R13
+R14
+R2
+R3
+DEx4 work 10 tb_control 0 22 ]^nXhQRomFO7FzjP4BghF0
+!i122 0
+l57
+L26 308
+Ve>RkiI`1QS3hdFmZPHYJg1
+!s100 IoBlR>=cb3BQ78jM>2U5[0
+R6
+33
+R7
+!i10b 1
+R8
+R9
+R10
+!i113 0
+R11
+R12

@@ -277,7 +277,7 @@ begin
     --    RegDst    -> 0
     --    immSigned -> 0
     --    jump      -> 0
-    --    branch    -> 1
+    --    branch    -> 0
 
 
     -- Test Case 12: 
