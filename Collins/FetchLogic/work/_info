@@ -1,177 +1,436 @@
 m255
 K4
 z2
-!s11e MIXED_VERSIONS
+!s11e vcom 2020.2 2020.04, Apr 19 2020
 13
 !s112 1.1
 !i10d 8192
 !i10e 25
 !i10f 100
 cModel Technology
-Z0 dU:/Spring_2021/381_Lab/Project/CprE381/Collins/FetchLogic
-Efetchlogic
-Z1 w1614886141
+Z0 dU:/CPRE381/CprE381/Collins/FetchLogic
+T_opt
+!s110 1616082190
+VZM5Q:dIQRK:77cO6b9Ym21
+04 14 5 work tb_fetch_logic mixed 1
+=1-509a4c47370a-6053750d-2bc-1350
+o-quiet -auto_acc_if_foreign -work work
+tCvgOpt 0
+n@_opt
+OL;O;2020.2;71
+Eandg2
+Z1 w1615480049
 Z2 DPx3 std 6 textio 0 22 zE1`LPoLg^DX3Oz^4Fj1K3
 Z3 DPx4 ieee 14 std_logic_1164 0 22 cVAk:aDinOX8^VGI1ekP<3
-!i122 8
+!i122 7
 R0
-Z4 8FetchLogic.vhd
-Z5 FFetchLogic.vhd
+Z4 8U:/CPRE381/CprE381/Collins/FetchLogic/andg2.vhd
+Z5 FU:/CPRE381/CprE381/Collins/FetchLogic/andg2.vhd
 l0
-Z6 L21 1
-VT@QoUN4TXkV@iE6N:>5SH0
-!s100 mV2T:O:YzjYDZjRzzNQB:3
+Z6 L23 1
+VQ@<<<@nlJ=eiIl4BJDFzW2
+!s100 YT?bGzEmcFo:DlnoC^B4_0
 Z7 OL;C;2020.2;71
-33
-Z8 !s110 1614886207
+32
+Z8 !s110 1616082027
 !i10b 1
-Z9 !s108 1614886206.000000
-Z10 !s90 -reportprogress|300|-2008|-work|work|FetchLogic.vhd|full_adder_N.vhd|mem.vhd|reg_N.vhd|
-!s107 reg_N.vhd|mem.vhd|full_adder_N.vhd|FetchLogic.vhd|
+Z9 !s108 1616082027.000000
+Z10 !s90 -reportprogress|300|-work|work|U:/CPRE381/CprE381/Collins/FetchLogic/andg2.vhd|
+Z11 !s107 U:/CPRE381/CprE381/Collins/FetchLogic/andg2.vhd|
 !i113 0
-Z11 o-2008 -work work
-Z12 tExplicit 1 CvgOpt 0
-Astructural
+Z12 o-work work
+Z13 tExplicit 1 CvgOpt 0
+Adataflow
 R2
 R3
-DEx4 work 10 fetchlogic 0 22 T@QoUN4TXkV@iE6N:>5SH0
-!i122 8
-l88
-L33 105
-VKV@g]N0Oa;JnL=[>HC6UU3
-!s100 ]ETMlMRI;QR;V=IdlhUk92
+DEx4 work 5 andg2 0 22 Q@<<<@nlJ=eiIl4BJDFzW2
+!i122 7
+l32
+L31 6
+VJVOzCk?IH:iJ5bCRU`CK13
+!s100 I`@Z@UBObS]<7m8bPgKUS1
 R7
-33
+32
 R8
 !i10b 1
 R9
 R10
-Z13 !s107 reg_N.vhd|mem.vhd|full_adder_N.vhd|FetchLogic.vhd|
-!i113 0
 R11
+!i113 0
 R12
-Efull_adder_n
-Z14 w1614624064
+R13
+Edffg
+Z14 w1577987095
 R2
 R3
-!i122 8
+!i122 5
 R0
-Z15 8full_adder_N.vhd
-Z16 Ffull_adder_N.vhd
+Z15 8U:/CPRE381/CprE381/Collins/FetchLogic/dffg.vhd
+Z16 FU:/CPRE381/CprE381/Collins/FetchLogic/dffg.vhd
 l0
 R6
-VRg7ZY^<Fg]eY?K4K6FLl32
-!s100 86lB<LWfRld^CMP`0a;f52
+V<]b9Vm3e`GAN;Cnj:57L>2
+!s100 T4gcXQGMCgKJbn8XhBM;b0
 R7
-33
-R8
+32
+Z17 !s110 1616082016
 !i10b 1
-R9
-R10
-R13
+Z18 !s108 1616082016.000000
+Z19 !s90 -reportprogress|300|-work|work|U:/CPRE381/CprE381/Collins/FetchLogic/dffg.vhd|
+Z20 !s107 U:/CPRE381/CprE381/Collins/FetchLogic/dffg.vhd|
 !i113 0
-R11
 R12
-Astructural
-R2
-R3
-DEx4 work 12 full_adder_n 0 22 Rg7ZY^<Fg]eY?K4K6FLl32
-!i122 8
-l43
-L31 29
-Vdf>0BFEY;k;ZL:AGd[:3A3
-!s100 cbS2oZ7QCYS43aT79D:ke0
-R7
-33
-R8
-!i10b 1
-R9
-R10
 R13
-!i113 0
-R11
-R12
-Emem
-Z17 w1585160666
-Z18 DPx4 ieee 11 numeric_std 0 22 aU^R8eGcicLcUFIaBQSL>3
-R2
-R3
-!i122 8
-R0
-Z19 8mem.vhd
-Z20 Fmem.vhd
-l0
-L8 1
-VBSiW;n7WFnI_8U6nH>OE[3
-!s100 fRlcaiTJZJ1H;nZh;8=LI3
-R7
-33
-R8
-!i10b 1
-R9
-R10
-R13
-!i113 0
-R11
-R12
-Artl
-R18
-R2
-R3
-DEx4 work 3 mem 0 22 BSiW;n7WFnI_8U6nH>OE[3
-!i122 8
-l37
-L27 24
-V2OV<fokhe<Og`16n4[bZI2
-!s100 OI8_3><BhDkT3l3n8`OXd3
-R7
-33
-R8
-!i10b 1
-R9
-R10
-R13
-!i113 0
-R11
-R12
-Ereg_n
-Z21 w1614624065
-R2
-R3
-!i122 8
-R0
-Z22 8reg_N.vhd
-Z23 Freg_N.vhd
-l0
-L23 1
-V3nk88G8ITiDTQ6bG:8C0T1
-!s100 4lljEbRiIQBOPDAnAc5lI2
-R7
-33
-R8
-!i10b 1
-R9
-R10
-R13
-!i113 0
-R11
-R12
 Amixed
 R2
 R3
-DEx4 work 5 reg_n 0 22 3nk88G8ITiDTQ6bG:8C0T1
-!i122 8
+DEx4 work 4 dffg 0 22 <]b9Vm3e`GAN;Cnj:57L>2
+!i122 5
+l37
+L33 29
+V`CHXPZKVEek`3gFWL_zFm2
+!s100 iOdlTUid@@]UimFK_53^C1
+R7
+32
+R17
+!i10b 1
+R18
+R19
+R20
+!i113 0
+R12
+R13
+Efetchlogic
+Z21 w1616082073
+R2
+R3
+!i122 16
+R0
+Z22 8U:/CPRE381/CprE381/Collins/FetchLogic/FetchLogic.vhd
+Z23 FU:/CPRE381/CprE381/Collins/FetchLogic/FetchLogic.vhd
+l0
+Z24 L21 1
+V[anWR7UJj8Sh8B1`J36n90
+!s100 _X78g=`hK3FkbjzO=BUG41
+R7
+32
+Z25 !s110 1616082183
+!i10b 1
+Z26 !s108 1616082183.000000
+Z27 !s90 -reportprogress|300|-work|work|U:/CPRE381/CprE381/Collins/FetchLogic/FetchLogic.vhd|
+Z28 !s107 U:/CPRE381/CprE381/Collins/FetchLogic/FetchLogic.vhd|
+!i113 0
+R12
+R13
+Astructural
+R2
+R3
+DEx4 work 10 fetchlogic 0 22 [anWR7UJj8Sh8B1`J36n90
+!i122 16
+l116
+L37 158
+Vg7?RCf:D<9K78^gOn^cod1
+!s100 89_2S6h_h39YE[l1C]RK`2
+R7
+32
+R25
+!i10b 1
+R26
+R27
+R28
+!i113 0
+R12
+R13
+Efull_adder
+Z29 w1612908212
+R2
+R3
+!i122 6
+R0
+Z30 8U:/CPRE381/CprE381/Collins/FetchLogic/full_adder.vhd
+Z31 FU:/CPRE381/CprE381/Collins/FetchLogic/full_adder.vhd
+l0
+R24
+VSf9HKBOnW5BT_k2cTk7RV1
+!s100 []03H[FfQ@0cSfTS03UL>1
+R7
+32
+Z32 !s110 1616082019
+!i10b 1
+Z33 !s108 1616082019.000000
+Z34 !s90 -reportprogress|300|-work|work|U:/CPRE381/CprE381/Collins/FetchLogic/full_adder.vhd|
+Z35 !s107 U:/CPRE381/CprE381/Collins/FetchLogic/full_adder.vhd|
+!i113 0
+R12
+R13
+Astructural
+R2
+R3
+DEx4 work 10 full_adder 0 22 Sf9HKBOnW5BT_k2cTk7RV1
+!i122 6
+l32
+L30 7
+V<>[@h4CgRRNQzW2CERV?X2
+!s100 V:KNIM^VLPLnOZHJ@hBEg3
+R7
+32
+R32
+!i10b 1
+R33
+R34
+R35
+!i113 0
+R12
+R13
+Efull_adder_n
+R1
+R2
+R3
+!i122 9
+R0
+Z36 8U:/CPRE381/CprE381/Collins/FetchLogic/full_adder_N.vhd
+Z37 FU:/CPRE381/CprE381/Collins/FetchLogic/full_adder_N.vhd
+l0
+R24
+Vc^l^TbmWEnS4WVY3YaWM?0
+!s100 86lB<LWfRld^CMP`0a;f52
+R7
+32
+Z38 !s110 1616082032
+!i10b 1
+Z39 !s108 1616082032.000000
+Z40 !s90 -reportprogress|300|-work|work|U:/CPRE381/CprE381/Collins/FetchLogic/full_adder_N.vhd|
+Z41 !s107 U:/CPRE381/CprE381/Collins/FetchLogic/full_adder_N.vhd|
+!i113 0
+R12
+R13
+Astructural
+R2
+R3
+DEx4 work 12 full_adder_n 0 22 c^l^TbmWEnS4WVY3YaWM?0
+!i122 9
+l43
+L31 29
+V_R<ld=]lZgN8TD`SFHz]l3
+!s100 cbS2oZ7QCYS43aT79D:ke0
+R7
+32
+R38
+!i10b 1
+R39
+R40
+R41
+!i113 0
+R12
+R13
+Emem
+R1
+Z42 DPx4 ieee 11 numeric_std 0 22 aU^R8eGcicLcUFIaBQSL>3
+R2
+R3
+!i122 10
+R0
+Z43 8U:/CPRE381/CprE381/Collins/FetchLogic/mem.vhd
+Z44 FU:/CPRE381/CprE381/Collins/FetchLogic/mem.vhd
+l0
+L8 1
+Vl8<PCiN;cU;BN3M[A<;IE3
+!s100 fRlcaiTJZJ1H;nZh;8=LI3
+R7
+32
+Z45 !s110 1616082034
+!i10b 1
+Z46 !s108 1616082034.000000
+Z47 !s90 -reportprogress|300|-work|work|U:/CPRE381/CprE381/Collins/FetchLogic/mem.vhd|
+Z48 !s107 U:/CPRE381/CprE381/Collins/FetchLogic/mem.vhd|
+!i113 0
+R12
+R13
+Artl
+R42
+R2
+R3
+DEx4 work 3 mem 0 22 l8<PCiN;cU;BN3M[A<;IE3
+!i122 10
+l37
+L27 24
+V`6^NbPhKNmSBg:`:Un8;g3
+!s100 OI8_3><BhDkT3l3n8`OXd3
+R7
+32
+R45
+!i10b 1
+R46
+R47
+R48
+!i113 0
+R12
+R13
+Emux2t1
+Z49 w1612552177
+R2
+R3
+!i122 11
+R0
+Z50 8U:/CPRE381/CprE381/Collins/FetchLogic/mux2t1.vhd
+Z51 FU:/CPRE381/CprE381/Collins/FetchLogic/mux2t1.vhd
+l0
+R24
+VHcTCh5nZ6a:b3H^kUB;;b1
+!s100 <b<1Y>@cZoELAdI_e^H0e3
+R7
+32
+Z52 !s110 1616082036
+!i10b 1
+Z53 !s108 1616082036.000000
+Z54 !s90 -reportprogress|300|-work|work|U:/CPRE381/CprE381/Collins/FetchLogic/mux2t1.vhd|
+Z55 !s107 U:/CPRE381/CprE381/Collins/FetchLogic/mux2t1.vhd|
+!i113 0
+R12
+R13
+Astructural
+R2
+R3
+DEx4 work 6 mux2t1 0 22 HcTCh5nZ6a:b3H^kUB;;b1
+!i122 11
+l32
+L30 5
+VKjhl56T0fmPcQUT=NmI`20
+!s100 YP9kYR85dD?7QgOJ>OBGO0
+R7
+32
+R52
+!i10b 1
+R53
+R54
+R55
+!i113 0
+R12
+R13
+Emux2t1_n
+R1
+R2
+R3
+!i122 12
+R0
+Z56 8U:/CPRE381/CprE381/Collins/FetchLogic/mux2t1_N.vhd
+Z57 FU:/CPRE381/CprE381/Collins/FetchLogic/mux2t1_N.vhd
+l0
+R24
+VE7TN;]G]MGGL]ZHFl1Gg?0
+!s100 9gDZ@ejiQ7C7^G`nLlB3j2
+R7
+32
+Z58 !s110 1616082038
+!i10b 1
+Z59 !s108 1616082038.000000
+Z60 !s90 -reportprogress|300|-work|work|U:/CPRE381/CprE381/Collins/FetchLogic/mux2t1_N.vhd|
+Z61 !s107 U:/CPRE381/CprE381/Collins/FetchLogic/mux2t1_N.vhd|
+!i113 0
+R12
+R13
+Astructural
+R2
+R3
+DEx4 work 8 mux2t1_n 0 22 E7TN;]G]MGGL]ZHFl1Gg?0
+!i122 12
+l39
+L30 21
+V78HIDE>aF6cKVRe<Xmn<@3
+!s100 lB2Pm^:QAMnf>>hZUJ:[S3
+R7
+32
+R58
+!i10b 1
+R59
+R60
+R61
+!i113 0
+R12
+R13
+Ereg_n
+R1
+R2
+R3
+!i122 13
+R0
+Z62 8U:/CPRE381/CprE381/Collins/FetchLogic/reg_N.vhd
+Z63 FU:/CPRE381/CprE381/Collins/FetchLogic/reg_N.vhd
+l0
+R6
+V_Z]3NLTFOJlR1FH?nBa>h1
+!s100 4lljEbRiIQBOPDAnAc5lI2
+R7
+32
+Z64 !s110 1616082040
+!i10b 1
+Z65 !s108 1616082040.000000
+Z66 !s90 -reportprogress|300|-work|work|U:/CPRE381/CprE381/Collins/FetchLogic/reg_N.vhd|
+Z67 !s107 U:/CPRE381/CprE381/Collins/FetchLogic/reg_N.vhd|
+!i113 0
+R12
+R13
+Amixed
+R2
+R3
+DEx4 work 5 reg_n 0 22 _Z]3NLTFOJlR1FH?nBa>h1
+!i122 13
 l45
 L33 52
-VN3TjM9J:AY0iSmZV2@IPe1
+VzAkhh;Mczh844W@EX8in33
 !s100 G[d=]U26B>82U;>cMhc^B0
 R7
-33
-R8
+32
+R64
 !i10b 1
-R9
-R10
-R13
+R65
+R66
+R67
 !i113 0
-R11
 R12
+R13
+Etb_fetch_logic
+Z68 w1616078729
+Z69 DPx3 std 3 env 0 22 d?`1ck@NdeD@H3RZG7FgZ2
+Z70 DPx4 ieee 16 std_logic_textio 0 22 ^l:n6VFdg74Q?CKDhjD]D3
+R2
+R3
+!i122 14
+R0
+Z71 8U:/CPRE381/CprE381/Collins/FetchLogic/tb_fetch_logic.vhd
+Z72 FU:/CPRE381/CprE381/Collins/FetchLogic/tb_fetch_logic.vhd
+l0
+L22 1
+Vb88@OFB]DjiaE8mQD^h^N3
+!s100 `JE>fW57gR_?@]4HAQoh43
+R7
+32
+Z73 !s110 1616082042
+!i10b 1
+Z74 !s108 1616082042.000000
+Z75 !s90 -reportprogress|300|-work|work|U:/CPRE381/CprE381/Collins/FetchLogic/tb_fetch_logic.vhd|
+Z76 !s107 U:/CPRE381/CprE381/Collins/FetchLogic/tb_fetch_logic.vhd|
+!i113 0
+R12
+R13
+Amixed
+R69
+R70
+R2
+R3
+DEx4 work 14 tb_fetch_logic 0 22 b88@OFB]DjiaE8mQD^h^N3
+!i122 14
+l56
+L26 99
+VFZBz4c:G_P6jK;;z63ej@0
+!s100 VciWVGTH7N4m0BH6c10;=3
+R7
+32
+R73
+!i10b 1
+R74
+R75
+R76
+!i113 0
+R12
+R13
