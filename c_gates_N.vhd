@@ -32,10 +32,10 @@ architecture behavioral of c_gates_N is
 begin
 
     with i_Sel select
-     o_Q <=   i_A AND i_B with "00",
-              i_A OR  i_B with "01",
-              i_A XOR i_B with "10",
-              i_A NOR i_B with "11",
-              i_A with others;
+     o_Q <=   i_A AND i_B when "00",
+              i_A OR  i_B when "01",
+              i_A XOR i_B when "10",
+              i_A NOR i_B when "11",
+              i_A when others;
 
 end behavioral;
