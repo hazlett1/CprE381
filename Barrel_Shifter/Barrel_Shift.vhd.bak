@@ -38,7 +38,9 @@ signal unsignedval : std_logic := '0'; --hard coded for sign or unsigned to add 
 
 signal shiftLorR : std_logic_vector(31 downto 0);
 
+signal o_firstshift : std_logic;
 
+signal output : std_logic_vector(31 downto 0); -- Potential new signal for the generates?
 
 
 

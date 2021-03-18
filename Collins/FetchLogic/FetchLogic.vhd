@@ -20,20 +20,17 @@ use IEEE.std_logic_1164.all;
 
   entity FetchLogic is
     generic(N : integer := 32); -- Generic of type integer for input/output data width. Default value is 32.
-    port(	i_PC  : in std_logic_vector(N-1 downto 0);  -- Normal shifted by 4 or standard value
-		i_BEQ: in std_logic_vector(N-1 downto 0); -- BEQ value
-		i_Jump: in std_logic_vector(N-1 downto 0); -- JUMP VALUE
-
-			i_CLK : in std_logic;
-			i_RST : in std_logic;
- 			
-			equals : in std_logic;
-			branch : in std_logic;
-			jump   : in std_logic;
-			pcWE   : in std_logic;
-
+    port(	i_PC   : in std_logic_vector(N-1 downto 0);  -- Normal shifted by 4 or standard value
+		i_BEQ  : in std_logic_vector(N-1 downto 0); -- BEQ value
+		i_Jump : in std_logic_vector(N-1 downto 0); -- JUMP VALUE
+		i_CLK  : in std_logic;
+		i_RST  : in std_logic;
+		equals : in std_logic;
+		branch : in std_logic;
+		jump   : in std_logic;
+		pcWE   : in std_logic;
 		o_PCPlus   : out std_logic_vector(N-1 downto 0);
-		o_Address  : out std_logic_vector(N-1 downto 0)); -- Ouyput from memory
+		o_Address  : out std_logic_vector(N-1 downto 0)); -- Output from memory
   end FetchLogic;
 
 
@@ -79,7 +76,7 @@ component mem is
   end component;
 
 --adder
-component full_adder is
+component full_adder_N is
   generic(N : integer := 32); -- Generic of type integer for input/output data width. Default value is 32.
   port(	i_vC         :  in std_logic;
         i_vA         :  in std_logic_vector(N-1 downto 0);
@@ -95,7 +92,7 @@ component andg2 is
        i_B          : in std_logic;
        o_F          : out std_logic);
 
-end component
+end component;
 
 
 --Reg_N signal
@@ -124,7 +121,7 @@ begin
 -- AND -- Equal && Branch
  ---------------------------------------------------------------------------
 andd: andg2
-  port(i_A     =>     equals,   -- Equal (Control bit) 									
+  port MAP(i_A     =>     equals,   -- Zero (Control bit) 									
        i_B     =>     branch,	-- Branch (control bit) 									
        o_F     =>  s_BranchEq  );  -- Signal bit for Mux 1
 
@@ -135,9 +132,9 @@ andd: andg2
 -- MUX 1 -- BRANCH (NOT) EQUALS
  ---------------------------------------------------------------------------
 MUX1: mux2t1_N
-  port(i_S          => s_BranchEq , -- Equal and Branch
-       i_D0         =>  i_BEQ, -- Branch Value (branch input value)
-       i_D1         =>  i_PC, -- Non- Branch Value (the PC+ 4 value or 0 if just starting??) NOT SURE 
+  port MAP(i_S          => s_BranchEq , -- Equal and Branch
+       i_D1         =>  i_BEQ, -- Branch Value (branch input value)
+       i_D0         =>  i_PC, -- Non- Branch Value (the PC+ 4 value or 0 if just starting??) NOT SURE 
        o_OA         =>  s_mux1); -- Output Value from mux 1
 
 
@@ -148,7 +145,7 @@ MUX1: mux2t1_N
 -- MUX 2
  ---------------------------------------------------------------------------
 MUX2: mux2t1_N
-  port(i_S          =>  jump, -- Jump or No Jump (Control Bit)  					
+  port MAP(i_S      =>  jump, -- Jump or No Jump (Control Bit)  					
        i_D0         =>  s_mux1, -- Output from mux 1
        i_D1         =>  i_Jump, -- Jump Value
        o_OA         =>  s_mux2); -- Output Value from Mux 2
@@ -178,7 +175,7 @@ MUX2: mux2t1_N
 
  meme: mem
     port MAP(clk		=> i_CLK,
-	     addr               => s_o_reg_N,
+	     addr               => s_o_reg_N(9 downto 0),
              data               => s_neverUse,
              we                 => '0',
              q                  => o_Address);
@@ -187,17 +184,11 @@ MUX2: mux2t1_N
 
 
 
-  Adder1: full_adder
+  Adder1: full_adder_N
     port MAP(i_vC               => '0',
              i_vA               => "00000000000000000000000000000100" ,
              i_vB               => s_o_reg_N,   
 	     o_vS      		=> o_PCPlus,
 	     o_vC		=> s_neverUseCarry);
-
-
-	-- 32 bit - '4' hardcoded in binary
-
-
-
 
 end structural;
