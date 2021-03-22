@@ -85,7 +85,7 @@ begin
   ---------------------------------------------
   
   --Might need to extend ALUop one bit for unsigned values as well for addition and subtraction
-
+  
   -- The Add Sub conponent 
   s_iAddSub <= (ALUop(3) AND ALUop(0));
   g_Add_Sub: add_sub_N
@@ -107,7 +107,7 @@ begin
   s_iLogic <= NOT (ALUop(1) AND ALUop(0));
   g_Barrel_Shifter: barrel_shift
     port MAP( i_Data  => s_iA_Barrel,
-              i_Left  => (NOT ALUop(0)) OR (i_B(10) AND s_iLogic),
+              i_Left  => (NOT ALUop(0)) OR (i_B(10) AND (NOT s_iLogic)),
               i_logic => s_iLogic,
               i_shift => s_iShamnt,
               o_Data  => s_oBarrel);

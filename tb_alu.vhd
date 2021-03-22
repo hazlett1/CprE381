@@ -219,18 +219,6 @@ begin
     --  -o_Ovf   = 0
     --  -o_Zero  = 0
 
-    --Test Case 10
-    --nor command
-    s_ALUop <= "0111";
-    s_iA <= x"000000F7";
-    s_iB <= x"0000008F";  
-    wait for gCLK_HPER*2;
-    --Expected output
-    --  -o_Q     = 0xFFFFFF00
-    --  -o_Carry = 0
-    --  -o_Ovf   = 0
-    --  -o_Zero  = 0
-
     --Test Case 11
     --nor command
     s_ALUop <= "0111";
